@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('cid_id');
             $table->timestamps();
 
-            $table->foreign('cid_id')->references('cid_id')->on('cidade')->onDelete('cascade');
+            $table->foreign('cid_id')->references('cid_id')->on('cidade')->onDelete('restrict');
         });
     }
 
