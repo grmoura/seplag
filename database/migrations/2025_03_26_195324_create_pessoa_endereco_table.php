@@ -14,8 +14,8 @@ return new class extends Migration
             $table->primary(['pes_id', 'end_id']);
             $table->timestamps();
     
-            $table->foreign('pes_id')->references('pes_id')->on('pessoa')->onDelete('cascade');
-            $table->foreign('end_id')->references('end_id')->on('endereco')->onDelete('cascade');
+            $table->foreign('pes_id')->references('pes_id')->on('pessoa')->onDelete('restrict');
+            $table->foreign('end_id')->references('end_id')->on('endereco')->onDelete('restrict');
         });
     }
     

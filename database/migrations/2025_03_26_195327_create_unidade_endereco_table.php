@@ -14,8 +14,8 @@ return new class extends Migration
             $table->primary(['unid_id', 'end_id']);
             $table->timestamps();
     
-            $table->foreign('unid_id')->references('unid_id')->on('unidade')->onDelete('cascade');
-            $table->foreign('end_id')->references('end_id')->on('endereco')->onDelete('cascade');
+            $table->foreign('unid_id')->references('unid_id')->on('unidade')->onDelete('restrict');
+            $table->foreign('end_id')->references('end_id')->on('endereco')->onDelete('restrict');
         });
     }
     

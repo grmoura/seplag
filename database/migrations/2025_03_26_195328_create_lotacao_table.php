@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('lot_portaria', 200);
             $table->timestamps();
     
-            $table->foreign('pes_id')->references('pes_id')->on('pessoa')->onDelete('cascade');
-            $table->foreign('unid_id')->references('unid_id')->on('unidade')->onDelete('cascade');
+            $table->foreign('pes_id')->references('pes_id')->on('pessoa')->onDelete('restrict');
+            $table->foreign('unid_id')->references('unid_id')->on('unidade')->onDelete('restrict');
         });
     }
     

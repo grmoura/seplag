@@ -10,6 +10,8 @@ class UnidadeEndereco extends Model
     use HasFactory;
 
     protected $table = 'unidade_endereco';
+    protected $primaryKey = null;
+    public $incrementing = false;
     public $timestamps = false;
 
     protected $fillable = [

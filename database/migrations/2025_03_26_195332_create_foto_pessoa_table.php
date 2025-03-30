@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('fp_hash', 50);
             $table->timestamps();
     
-            $table->foreign('pes_id')->references('pes_id')->on('pessoa')->onDelete('cascade');
+            $table->foreign('pes_id')->references('pes_id')->on('pessoa')->onDelete('restrict');
         });
     }
     
