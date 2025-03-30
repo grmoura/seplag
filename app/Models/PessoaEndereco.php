@@ -10,6 +10,8 @@ class PessoaEndereco extends Model
     use HasFactory;
 
     protected $table = 'pessoa_endereco';
+    protected $primaryKey = null;
+    public $incrementing = false;
     public $timestamps = false;
 
     protected $fillable = [
