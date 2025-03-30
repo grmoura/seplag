@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\EnderecoRequest;
 use App\Models\Endereco;
+use App\Models\PessoaEndereco;
 use App\Models\UnidadeEndereco;
 use Illuminate\Http\Response;
 
@@ -59,12 +60,16 @@ class EnderecoController extends Controller
     {
         $endereco = Endereco::find($end_id);
         $unidadeEndereco = UnidadeEndereco::where('end_id', $end_id)->exists();
+        $pessoaEndereco = PessoaEndereco::where('end_id', $end_id)->exists();
+
+        if ($pessoaEndereco)
+            return response()->json(['message' => 'Endereço está vínculado em Pessoa X Endereço.'], Response::HTTP_NOT_FOUND);
+
+        if ($unidadeEndereco)
+            return response()->json(['message' => 'Endereço está vínculado em Unidade X Endereço.'], Response::HTTP_NOT_FOUND);
 
         if (!$endereco)
             return response()->json(['message' => 'Endereço não encontrado.'], Response::HTTP_NOT_FOUND);
-
-        if ($unidadeEndereco)
-            return response()->json(['message' => 'Endereço está sendo utilizada em Unidade X Endereço.'], Response::HTTP_NOT_FOUND);
 
         $endereco->delete();
         return response()->json(['message' => 'Endereço deletado com sucesso!']);

@@ -15,7 +15,7 @@ class UnidadeEnderecoController extends Controller
         $unidadesEnderecos = UnidadeEndereco::with(['unidade', 'endereco'])->paginate(3);
 
         return response()->json([
-            'message' => 'Unidades x Endereços carregadas com sucesso!',
+            'message' => 'Vínculos de Unidades x Endereços carregados com sucesso!',
             'unidades_enderecos' => $unidadesEnderecos
         ]);
     }
@@ -35,12 +35,12 @@ class UnidadeEnderecoController extends Controller
         $unidade = Unidade::where('unid_id', $unid_id)->exists();
 
         if (!$unidade)
-            return response()->json(['message' => 'Unidade não encontrada.'], Response::HTTP_NOT_FOUND);
+            return response()->json(['message' => 'Não foi encontrado vínculo com essa Unidade.'], Response::HTTP_NOT_FOUND);
 
         $endereco = Endereco::where('end_id', $end_id)->exists();
 
         if (!$endereco)
-            return response()->json(['message' => 'Endereço não encontrado.'], Response::HTTP_NOT_FOUND);
+            return response()->json(['message' => 'Não foi encontrado vínculo com essa Endereço.'], Response::HTTP_NOT_FOUND);
 
         $unidadesEnderecos = UnidadeEndereco::where('unid_id', '=', $unid_id)->where('end_id', '=', $end_id)->get();
 
@@ -50,14 +50,14 @@ class UnidadeEnderecoController extends Controller
         ]);
     }
 
-    public function update($unid_id, $end_id, UnidadeEnderecoRequest $request)
+    public function update($unid_id, $end_id, UnidadeEnderecoRequest $UnidadeEnderecoRequest)
     {
         $unidadeEndereco = UnidadeEndereco::where('unid_id', $unid_id)->where('end_id', $end_id)->first();
 
         if (!$unidadeEndereco)
             return response()->json(['message' => 'Vínculo Unidade x Endereço não encontrado'], Response::HTTP_NOT_FOUND);
 
-        $unidadeEndereco->update($request->validated());
+        $unidadeEndereco->update($UnidadeEnderecoRequest->validated());
 
         return response()->json([
             'message' => 'Vínculo Unidade x Endereço atualizado com sucesso!',

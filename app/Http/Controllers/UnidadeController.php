@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UnidadeRequest;
+use App\Models\Lotacao;
 use App\Models\Unidade;
 use App\Models\UnidadeEndereco;
 use Illuminate\Http\Response;
@@ -60,12 +61,16 @@ class UnidadeController extends Controller
     {
         $unidade = Unidade::find($unid_id);
         $unidadeEndereco = UnidadeEndereco::where('unid_id', $unid_id)->exists();
+        $lotacao = Lotacao::where('unid_id', $unid_id)->exists();
+
+        if ($lotacao)
+            return response()->json(['message' => 'Unidade está vínculado em Lotação.'], Response::HTTP_NOT_FOUND);
+
+        if ($unidadeEndereco)
+            return response()->json(['message' => 'Unidade está vínculada em Unidade X Endereço.'], Response::HTTP_NOT_FOUND);
 
         if (!$unidade)
             return response()->json(['message' => 'Unidade não encontrada.'], Response::HTTP_NOT_FOUND);
-
-        if ($unidadeEndereco)
-            return response()->json(['message' => 'Unidade está sendo utilizada em Unidade X Endereço.'], Response::HTTP_NOT_FOUND);
 
         $unidade->delete();
         return response()->json(['message' => 'Unidade deletada com sucesso!'], Response::HTTP_OK);

@@ -14,7 +14,6 @@ return new class extends Migration
             $table->date('st_data_demissao')->nullable();
             $table->timestamps();
     
-            $table->primary('pes_id');
             $table->foreign('pes_id')->references('pes_id')->on('pessoa')->onDelete('restrict');
         });
     }

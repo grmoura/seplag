@@ -13,7 +13,6 @@ return new class extends Migration
             $table->string('se_matricula', 20)->unique();
             $table->timestamps();
     
-            $table->primary('pes_id');
             $table->foreign('pes_id')->references('pes_id')->on('pessoa')->onDelete('restrict');
         });
     }
