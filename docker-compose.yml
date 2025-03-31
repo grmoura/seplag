@@ -5,16 +5,19 @@ services:
     build: .
     container_name: laravel_app
     restart: unless-stopped
+    # mem_limit: 512m 
+    # mem_reservation: 256m 
     working_dir: /var/www
     volumes:
       - .:/var/www
     networks:
       - laravel_network
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     environment:
-      DB_HOST: ${DB_HOST}
-      DB_PORT: ${DB_PORT}
+      DB_HOST: db
+      DB_PORT: 5432
       DB_DATABASE: ${DB_DATABASE}
       DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
@@ -23,6 +26,8 @@ services:
     image: nginx:alpine
     container_name: nginx
     restart: unless-stopped
+    # mem_limit: 512m 
+    # mem_reservation: 256m 
     ports:
       - "8000:80"
     volumes:
@@ -37,21 +42,29 @@ services:
     image: postgres:15
     container_name: postgres_db
     restart: unless-stopped
+    # mem_limit: 512m 
+    # mem_reservation: 256m 
     environment:
       POSTGRES_DB:  ${DB_DATABASE}
       POSTGRES_USER:  ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     ports:
-      - "5432:5432"
+      - "5433:5433"
     volumes:
       - pgdata:/var/lib/postgresql/data
     networks:
       - laravel_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME} -d ${DB_DATABASE}"]
+      interval: 10s
+      retries: 5
 
   minio:
     image: minio/minio
     container_name: minio
     restart: unless-stopped
+    # mem_limit: 512m 
+    # mem_reservation: 256m 
     ports:
       - "9000:9000"
       - "9001:9001"
