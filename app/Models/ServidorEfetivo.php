@@ -24,4 +24,5 @@ class ServidorEfetivo extends Model
     {
         return $this->belongsTo(Pessoa::class, 'pes_id');
     }
+
 }
