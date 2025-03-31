@@ -6,7 +6,6 @@ use App\Http\Requests\FotoPessoaRequest;
 use App\Models\FotoPessoa;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class FotoPessoaController extends Controller
@@ -16,82 +15,116 @@ class FotoPessoaController extends Controller
         $fotoPessoa = FotoPessoa::paginate(3);
 
         return response()->json([
-            'message' => 'Cidades carregadas com sucesso!',
+            'message' => 'Fotos Pessoas carregadas com sucesso!',
             'fotos_pessoas' => $fotoPessoa
+        ]);
+    }
+
+    public function show($fp_id)
+    {
+        $fotoPessoa = FotoPessoa::find($fp_id);
+
+        if (!$fotoPessoa)
+            return response()->json(['message' => 'Foto Pessoa não encontrada.'], Response::HTTP_NOT_FOUND);
+
+        $fotoPessoa->url_temporaria = Storage::temporaryUrl(
+            $fotoPessoa->fp_hash,
+            now()->addMinutes(5)
+        );
+
+        return response()->json([
+            'message' => 'Foto Pessoa carregada com sucesso!',
+            'foto_pessoa' => $fotoPessoa
         ]);
     }
 
     public function store(FotoPessoaRequest $fotoPessoaRequest)
     {
-        $files = Storage::disk('s3')->files();
+        $validated = $fotoPessoaRequest->validated();
 
-        // $validated = $fotoPessoaRequest->validated();
-        // if (!$fotoPessoaRequest->hasFile('foto'))
-        //     return response()->json(['message' => 'Selecione um arquivo para enviar como foto.'], Response::HTTP_BAD_REQUEST);
+        if ($fotoPessoaRequest->hasFile('fotos')) {
 
-        // if ($fotoPessoaRequest->hasFile('foto')) {
-        //     $file = $fotoPessoaRequest->file('foto');
+            $uploadedPhotos = [];
 
-            // $content = "Este é o conteúdo do meu arquivo de texto.\nAqui está outra linha.";
+            foreach ($fotoPessoaRequest->file('fotos') as $foto) {
+                $hash = md5(time() . $foto->getClientOriginalName());
+                $fileName = "{$validated['pes_id']}/{$hash}";
+                $bucket = env('AWS_BUCKET', 'pessoa-fotos');
 
-        //     // Definindo o nome do arquivo
-            // $fileName = 'meuarquivo.txt';;
+                $put = Storage::disk('s3')->put($fileName, $foto->getContent());
 
-        //     // Armazenando o arquivo no S3
-            // Storage::disk('s3')->put($fileName, $content);
+                $fotoPessoa = FotoPessoa::create([
+                    'pes_id' => $validated['pes_id'],
+                    'fp_bucket' => $bucket,
+                    'fp_data' => now()->toDateString(),
+                    'fp_hash' => $fileName
+                ]);
 
-        //     // $fotoPessoa = FotoPessoa::create([
-        //     //     'pes_id' => $validated['pes_id'],
-        //     //     'fp_data' => $validated['fp_data'],
-        //     //     'fp_bucket' => 'minio',
-        //     //     'fp_hash' => $path,
-        //     // ]);
+                $uploadedPhotos[] = $fotoPessoa;
+            }
 
-        //     // return response()->json([
-        //     //     'message' => 'Foto Pessoa armazenada com sucesso!',
-        //     //     'foto_pessoa' => $fotoPessoa
-        //     // ], Response::HTTP_CREATED);
-        // }
+            return response()->json([
+                'message' => 'Foto Pessoa armazenada com sucesso!',
+                'foto_pessoa' => $uploadedPhotos
+            ], Response::HTTP_CREATED);
+        }
 
-        // return response()->json(['message' => 'Arquivo de foto não enviado.'], Response::HTTP_BAD_REQUEST);
+        return response()->json(['message' => 'Arquivo de foto não enviado.'], Response::HTTP_BAD_REQUEST);
     }
 
-    public function show($cid_id)
+    public function update(FotoPessoaRequest $fotoPessoaRequest, $fp_id)
     {
-        $cidade = FotoPessoa::find($cid_id);
+        $validated = $fotoPessoaRequest->validated();
 
-        if (!$cidade)
-            return response()->json(['message' => 'Cidade não encontrada.'], Response::HTTP_NOT_FOUND);
+        $fotoPessoa = FotoPessoa::find($fp_id);
+
+        if (!$fotoPessoa)
+            return response()->json(['message' => 'Foto Pessoa não encontrada.'], Response::HTTP_NOT_FOUND);
+
+
+        if ($fotoPessoaRequest->hasFile('fotos')) {
+            $foto = $fotoPessoaRequest->file('fotos');
+
+            Storage::delete($fotoPessoa->fp_hash);
+
+            foreach ($fotoPessoaRequest->file('fotos') as $foto) {
+                $hash = md5(time() . $foto->getClientOriginalName());
+                $fileName = "{$validated['pes_id']}/{$hash}";
+            }
+
+            Storage::put($fileName, file_get_contents($foto));
+
+            $fotoPessoa->fp_hash = $fileName;
+            $fotoPessoa->save();
+
+            $fotoPessoa->url_temporaria = Storage::temporaryUrl(
+                $fileName,
+                now()->addMinutes(5)
+            );
+        }
 
         return response()->json([
-            'message' => 'Cidade carregada com sucesso!',
-            'cidade' => $cidade
-        ]);
-    }
-
-    public function update(CidadeRequest $cidadeRequest, $cid_id)
-    {
-        $cidade = FotoPessoa::find($cid_id);
-
-        if (!$cidade)
-            return response()->json(['message' => 'Cidade não encontrada.'], Response::HTTP_NOT_FOUND);
-
-        $cidade->update($cidadeRequest->all());
-
-        return response()->json([
-            'message' => 'Cidade atualizada com sucesso!',
-            'cidade' => $cidade
+            'message' => 'Foto Pessoa atualizada com sucesso!',
+            'foto_pessoa' => $fotoPessoa
         ]);
     }
 
     public function destroy($fp_id)
     {
-        $fotoPessoa = FotoPessoa::find($fp_id);
+        $foto = FotoPessoa::where('fp_id', $fp_id)->first();
 
-        if (!$fotoPessoa)
-            return response()->json(['message' => 'Cidade não encontrada.'], Response::HTTP_NOT_FOUND);
+        if (!$foto)
+            return response()->json(['message' => 'Foto Pessoa não encontrada.'], Response::HTTP_NOT_FOUND);
 
-        $cidade->delete();
-        return response()->json(['message' => 'Cidade deletada com sucesso!'], Response::HTTP_OK);
+        $caminhoArquivo = $foto->fp_hash;
+
+        $deleted = $foto->delete();
+
+        if ($deleted) {
+            Storage::disk('s3')->delete($caminhoArquivo);
+            return response()->json(['message' => 'Foto Pessoa deletada com sucesso!'], Response::HTTP_OK);
+        }
+
+        return response()->json(['message' => 'Erro ao deletar a foto.'], Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }

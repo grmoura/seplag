@@ -15,9 +15,10 @@ class FotoPessoaRequest extends FormRequest
     {
         return [
             'pes_id' => 'required|exists:pessoa,pes_id',
-            'fp_data' => 'required|date',
             'fp_bucket' => 'string|max:50',
             'fp_hash' => 'string|max:50',
+            'fotos' => 'required|array|max:5',
+            'fotos.*' => 'image|mimes:jpeg,png,jpg,gif|max:5120' 
         ];
     }
 
@@ -26,8 +27,6 @@ class FotoPessoaRequest extends FormRequest
         return [
             'pes_id.required' => 'O campo :attribute é obrigatório.',
             'pes_id.exists' => 'O :attribute informado não existe na tabela pessoa.',
-            'fp_data.required' => 'A data da foto é obrigatória.',
-            'fp_data.date' => 'A data da foto deve ser uma data válida.',
             'fp_bucket.string' => 'O campo :attribute deve ser uma string.',
             'fp_bucket.max' => 'O campo :attribute não pode ter mais de 50 caracteres.',
             'fp_hash.string' => 'O campo :attribute deve ser uma string.',
