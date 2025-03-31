@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PessoaRequest;
+use App\Models\FotoPessoa;
 use App\Models\Lotacao;
 use App\Models\Pessoa;
 use App\Models\PessoaEndereco;
@@ -66,6 +67,10 @@ class PessoaController extends Controller
         $servidorTemporario = ServidorTemporario::where('pes_id', $pes_id)->exists();
         $pessoaEndereco = PessoaEndereco::where('pes_id', $pes_id)->exists();
         $lotacao = Lotacao::where('pes_id', $pes_id)->exists();
+        $fotoPessoa = FotoPessoa::where('pes_id', $pes_id)->exists();
+
+        if ($fotoPessoa)
+            return response()->json(['message' => 'Pessoa está vínculado em Foto Pessoa.'], Response::HTTP_NOT_FOUND);
 
         if ($lotacao)
             return response()->json(['message' => 'Pessoa está vínculado em Lotação.'], Response::HTTP_NOT_FOUND);
