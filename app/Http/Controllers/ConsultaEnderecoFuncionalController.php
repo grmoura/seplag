@@ -20,10 +20,13 @@ class ConsultaEnderecoFuncionalController extends Controller
             ->join('lotacao', 'servidor_efetivo.pes_id', '=', 'lotacao.pes_id')
             ->join('unidade', 'lotacao.unid_id', '=', 'unidade.unid_id')
             ->join('endereco', 'unidade.unid_id', '=', 'endereco.end_id')
-            ->where('pessoa.pes_nome', 'LIKE', "%{$termo}%") 
+            ->join('cidade', 'endereco.cid_id', '=', 'cidade.cid_id')
+            ->where('pessoa.pes_nome', 'ILIKE', "%{$termo}%") 
             ->select(
                 'pessoa.pes_nome',
                 'unidade.unid_nome',
+                'cidade.cid_nome',
+                'cidade.cid_uf',
                 'endereco.end_tipo_logradouro',
                 'endereco.end_logradouro',
                 'endereco.end_numero',
