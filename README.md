@@ -48,7 +48,7 @@ Esta é a documentação da API desenvolvida em Laravel, utilizando Nginx, MinIO
 curl --location 'http://localhost:8000/api/registrar' \
 --header 'Accept: application/json' \
 --form 'name="GABRIEL"' \
---form 'email="dddd@hotmail.com4"' \
+--form 'email="grmoura18@hotmail.com"' \
 --form 'password="123123"'
 ```
 
@@ -57,7 +57,7 @@ curl --location 'http://localhost:8000/api/registrar' \
 ```sh
 curl --location 'http://localhost:8000/api/login' \
 --header 'Accept: application/json' \
---form 'email="dddd@hotmail.com4"' \
+--form 'email="grmoura18@hotmail.com"' \
 --form 'password="123123"'
 ```
 
