@@ -78,6 +78,7 @@ Além disso, a collection do Postman está disponível no repositório com o nom
 `seplag_colletion_postman.json`
 
 Como baixar e importar a collection no Postman:
+
 1.Baixar o Postman (caso ainda não tenha instalado):
 
     Acesse o site oficial do Postman: https://www.postman.com/downloads/
