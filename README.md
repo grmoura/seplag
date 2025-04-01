@@ -6,6 +6,7 @@ Esta é a documentação da API desenvolvida em Laravel, utilizando Nginx, MinIO
 ## Requisitos
 - Docker
 - Docker Compose
+- Postman
 
 ## Instalação e Configuração
 
