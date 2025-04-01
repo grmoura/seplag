@@ -71,7 +71,7 @@ curl --location --request POST 'http://localhost:8000/api/refresh' \
 ## Documentação Completa
 A documentação completa da API pode ser acessada no link abaixo:
 
-[Documentação Postman](https://documenter.getpostman.com/view/19098399/2sB2cPk6FY)
+[Documentação Postman](https://documenter.getpostman.com/view/19098399/2sB2cRCPyK)
 
 Além disso, a collection do Postman está disponível no repositório com o nome:
 
