@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "645be051-d833-4f53-a0f9-878f08447ef2",
+		"_postman_id": "58ae4467-8d81-4f09-b9f8-ffbadf3d75ac",
 		"name": "SEPLAG",
 		"description": "# 🚀 Get started here\n\nThis template guides you through CRUD operations (GET, POST, PUT, DELETE), variables, and tests.\n\n## 🔖 **How to use this template**\n\n#### **Step 1: Send requests**\n\nRESTful APIs allow you to perform CRUD operations using the POST, GET, PUT, and DELETE HTTP methods.\n\nThis collection contains each of these [request](https://learning.postman.com/docs/sending-requests/requests/) types. Open each request and click \"Send\" to see what happens.\n\n#### **Step 2: View responses**\n\nObserve the response tab for status code (200 OK), response time, and size.\n\n#### **Step 3: Send new Body data**\n\nUpdate or add new data in \"Body\" in the POST request. Typically, Body data is also used in PUT request.\n\n```\n{\n    \"name\": \"Add your name in the body\"\n}\n\n ```\n\n#### **Step 4: Update the variable**\n\nVariables enable you to store and reuse values in Postman. We have created a [variable](https://learning.postman.com/docs/sending-requests/variables/) called `base_url` with the sample request [https://postman-api-learner.glitch.me](https://postman-api-learner.glitch.me). Replace it with your API endpoint to customize this collection.\n\n#### **Step 5: Add tests in the \"Scripts\" tab**\n\nAdding tests to your requests can help you confirm that your API is working as expected. You can write test scripts in JavaScript and view the output in the \"Test Results\" tab.\n\n<img src=\"https://content.pstmn.io/fa30ea0a-373d-4545-a668-e7b283cca343/aW1hZ2UucG5n\" width=\"2162\" height=\"1530\">\n\n## 💪 Pro tips\n\n- Use folders to group related requests and organize the collection.\n    \n- Add more [scripts](https://learning.postman.com/docs/writing-scripts/intro-to-scripts/) to verify if the API works as expected and execute workflows.\n    \n\n## 💡Related templates\n\n[API testing basics](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9a37a28-055b-49cd-8c7e-97494a21eb54&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  \n[API documentation](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9c28f47-1253-44af-a2f3-20dce4da1f18&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  \n[Authorization methods](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=31a9a6ed-4cdf-4ced-984c-d12c9aec1c27&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
@@ -31,7 +31,7 @@
 								},
 								{
 									"key": "email",
-									"value": "dddd@hotmail.com4",
+									"value": "grmoura18@hotmail.com",
 									"type": "text"
 								},
 								{
@@ -108,7 +108,7 @@
 							"formdata": [
 								{
 									"key": "email",
-									"value": "dddd@hotmail.com4",
+									"value": "grmoura18@hotmail.com",
 									"type": "text"
 								},
 								{
@@ -314,12 +314,12 @@
 							"formdata": [
 								{
 									"key": "cid_nome",
-									"value": "sdfdsf",
+									"value": "Cuiabá",
 									"type": "text"
 								},
 								{
 									"key": "cid_uf",
-									"value": "fd",
+									"value": "MT",
 									"type": "text"
 								}
 							]
@@ -618,22 +618,22 @@
 							"formdata": [
 								{
 									"key": "end_tipo_logradouro",
-									"value": "weqqwe",
+									"value": "Casa",
 									"type": "text"
 								},
 								{
 									"key": "end_logradouro",
-									"value": "weqewq",
+									"value": "Rua Florais Casa Branca",
 									"type": "text"
 								},
 								{
 									"key": "end_numero",
-									"value": "123",
+									"value": "423",
 									"type": "text"
 								},
 								{
 									"key": "end_bairro",
-									"value": "w",
+									"value": "Consil",
 									"type": "text"
 								},
 								{
@@ -1442,7 +1442,7 @@
 							"formdata": [
 								{
 									"key": "pes_nome",
-									"value": "ITAMARAAA",
+									"value": "JOANA DA SILVA MARIA",
 									"type": "text"
 								},
 								{
@@ -1452,17 +1452,17 @@
 								},
 								{
 									"key": "pes_sexo",
-									"value": "sdasdsad",
+									"value": "Feminino",
 									"type": "text"
 								},
 								{
 									"key": "pes_mae",
-									"value": "asdasd",
+									"value": "Beatriz Silva",
 									"type": "text"
 								},
 								{
 									"key": "pes_pai",
-									"value": "dasd",
+									"value": "Batista Maria",
 									"type": "text"
 								}
 							]
@@ -1704,7 +1704,7 @@
 							"formdata": [
 								{
 									"key": "pes_id",
-									"value": "2",
+									"value": "1",
 									"type": "text"
 								},
 								{
@@ -1958,7 +1958,7 @@
 								},
 								{
 									"key": "st_data_admissao",
-									"value": "10/10/2024",
+									"value": "10/10/2020",
 									"type": "text"
 								},
 								{
@@ -2468,7 +2468,7 @@
 								},
 								{
 									"key": "lot_data_lotacao",
-									"value": "02/02/200",
+									"value": "02/02/2000",
 									"type": "text"
 								},
 								{
@@ -2478,7 +2478,7 @@
 								},
 								{
 									"key": "lot_portaria",
-									"value": "ewqeqweqw",
+									"value": "Portaria 4034/2010",
 									"type": "text"
 								}
 							]
@@ -2678,10 +2678,6 @@
 								"disabled": true
 							}
 						],
-						"body": {
-							"mode": "formdata",
-							"formdata": []
-						},
 						"url": {
 							"raw": "{{base_url}}/foto_pessoa/9",
 							"host": [
@@ -2735,13 +2731,13 @@
 							"formdata": [
 								{
 									"key": "pes_id",
-									"value": "2",
+									"value": "1",
 									"type": "text"
 								},
 								{
 									"key": "fotos[]",
 									"type": "file",
-									"src": "/C:/Users/grmou/OneDrive/Área de Trabalho/Kahsh/PEDIDO DO CONTRATO.png"
+									"src": "/C:/Users/grmou/OneDrive/Área de Trabalho/Kahsh/Screenshot_12.png"
 								}
 							]
 						},
