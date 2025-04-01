@@ -1,4 +1,4 @@
-# Documentação da API
+# Documentação da SEPLAG API
 
 ## Introdução
 Esta é a documentação da API desenvolvida em Laravel, utilizando Nginx, MinIO e PostgreSQL.
