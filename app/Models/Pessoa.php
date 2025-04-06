@@ -20,6 +20,7 @@ class Pessoa extends Model
         'pes_mae',
         'pes_pai',
     ];
+    protected $hidden = ['updated_at', 'created_at'];
 
     public function enderecos()
     {
@@ -43,6 +44,6 @@ class Pessoa extends Model
 
     public function fotos()
     {
-        return $this->hasMany(FotoPessoa::class, 'pes_id');
+        return $this->hasOne(FotoPessoa::class, 'pes_id', 'pes_id');
     }
 }

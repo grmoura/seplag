@@ -18,6 +18,7 @@ class UnidadeEndereco extends Model
         'unid_id',
         'end_id',
     ];
+    protected $hidden = ['updated_at', 'created_at'];
 
     public function unidade()
     {

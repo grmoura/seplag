@@ -75,7 +75,7 @@ Route::middleware(['auth:api', 'api'])->group(function () {
     Route::get('/servidor_efetivo', [ServidorEfetivoController::class, 'index']);
     Route::get('/servidor_efetivo/{pes_id}', [ServidorEfetivoController::class, 'show']);
     Route::post('/servidor_efetivo', [ServidorEfetivoController::class, 'store']);
-    Route::put('/servidor_efetivo/{pes_id}/{se_matricula}', [ServidorEfetivoController::class, 'update']);
+    Route::put('/servidor_efetivo/{pes_id}', [ServidorEfetivoController::class, 'update']);
     Route::delete('/servidor_efetivo/{pes_id}', [ServidorEfetivoController::class, 'destroy']);
 });
 

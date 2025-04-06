@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('servidor_efetivo', function (Blueprint $table) {
             $table->unsignedBigInteger('pes_id');
-            $table->string('se_matricula', 20)->unique();
+            $table->string('se_matricula', 20);
             $table->timestamps();
     
             $table->foreign('pes_id')->references('pes_id')->on('pessoa')->onDelete('restrict');

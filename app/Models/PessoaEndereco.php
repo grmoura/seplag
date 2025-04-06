@@ -18,6 +18,8 @@ class PessoaEndereco extends Model
         'pes_id',
         'end_id',
     ];
+    protected $hidden = ['updated_at', 'created_at'];
+    
     public function pessoa()
     {
         return $this->belongsTo(Pessoa::class, 'pes_id');

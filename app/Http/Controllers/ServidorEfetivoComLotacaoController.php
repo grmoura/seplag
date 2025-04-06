@@ -34,7 +34,7 @@ class ServidorEfetivoComLotacaoController extends Controller
             return response()->json(['message' => 'Não foi encontrado Servidor Efetivo nessa Unidade pesquisada.'], Response::HTTP_NOT_FOUND);
 
             $servidoresEfetivosLotados->getCollection()->transform(function ($servidor) {
-                $servidor->url_temporaria = Storage::temporaryUrl(
+                $servidor->foto = Storage::temporaryUrl(
                     $servidor->fp_hash, 
                     now()->addMinutes(5)
                 );

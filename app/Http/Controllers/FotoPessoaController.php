@@ -27,7 +27,7 @@ class FotoPessoaController extends Controller
         if (!$fotoPessoa)
             return response()->json(['message' => 'Foto Pessoa não encontrada.'], Response::HTTP_NOT_FOUND);
 
-        $fotoPessoa->url_temporaria = Storage::temporaryUrl(
+        $fotoPessoa->foto = Storage::temporaryUrl(
             $fotoPessoa->fp_hash,
             now()->addMinutes(5)
         );
@@ -42,26 +42,9 @@ class FotoPessoaController extends Controller
     {
         $validated = $fotoPessoaRequest->validated();
 
-        if ($fotoPessoaRequest->hasFile('fotos')) {
+        if ($validated['fotos']) {
 
-            $uploadedPhotos = [];
-
-            foreach ($fotoPessoaRequest->file('fotos') as $foto) {
-                $hash = md5(time() . $foto->getClientOriginalName());
-                $fileName = "{$validated['pes_id']}/{$hash}";
-                $bucket = env('AWS_BUCKET', 'pessoa-fotos');
-
-                $put = Storage::disk('s3')->put($fileName, $foto->getContent());
-
-                $fotoPessoa = FotoPessoa::create([
-                    'pes_id' => $validated['pes_id'],
-                    'fp_bucket' => $bucket,
-                    'fp_data' => now()->toDateString(),
-                    'fp_hash' => $fileName
-                ]);
-
-                $uploadedPhotos[] = $fotoPessoa;
-            }
+            $uploadedPhotos = FotoPessoaController::upload($validated['fotos'], $validated['pes_id']);
 
             return response()->json([
                 'message' => 'Foto Pessoa armazenada com sucesso!',
@@ -82,7 +65,7 @@ class FotoPessoaController extends Controller
             return response()->json(['message' => 'Foto Pessoa não encontrada.'], Response::HTTP_NOT_FOUND);
 
 
-        if ($fotoPessoaRequest->hasFile('fotos')) {
+        if ($validated['pes_id']) {
             $foto = $fotoPessoaRequest->file('fotos');
 
             Storage::delete($fotoPessoa->fp_hash);
@@ -97,7 +80,7 @@ class FotoPessoaController extends Controller
             $fotoPessoa->fp_hash = $fileName;
             $fotoPessoa->save();
 
-            $fotoPessoa->url_temporaria = Storage::temporaryUrl(
+            $fotoPessoa->foto = Storage::temporaryUrl(
                 $fileName,
                 now()->addMinutes(5)
             );
@@ -126,5 +109,28 @@ class FotoPessoaController extends Controller
         }
 
         return response()->json(['message' => 'Erro ao deletar a foto.'], Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+
+    public static function upload($fotos, $pes_id)
+    {
+        $uploadedPhotos = [];
+
+        foreach ($fotos as $foto) {
+            $hash = md5(time() . $foto->getClientOriginalName());
+            $fileName = "{$pes_id}/{$hash}";
+            $bucket = env('AWS_BUCKET', 'pessoa-fotos');
+
+            $put = Storage::disk('s3')->put($fileName, $foto->getContent());
+
+            $fotoPessoa = FotoPessoa::create([
+                'pes_id' => $pes_id,
+                'fp_bucket' => $bucket,
+                'fp_data' => now()->toDateString(),
+                'fp_hash' => $fileName
+            ]);
+
+            $uploadedPhotos[] = $fotoPessoa;
+        }
+        return $fotoPessoa;
     }
 }

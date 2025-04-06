@@ -20,6 +20,7 @@ class Endereco extends Model
         'end_bairro',
         'cid_id',
     ];
+    protected $hidden = ['updated_at', 'created_at'];
 
     public function cidade()
     {
@@ -34,5 +35,10 @@ class Endereco extends Model
     public function unidades()
     {
         return $this->belongsToMany(Unidade::class, 'unidade_endereco', 'end_id', 'unid_id');
+    }
+
+    public function unidade()
+    {
+        return $this->belongsTo(Unidade::class, 'unid_id', 'unid_id');
     }
 }

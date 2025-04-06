@@ -25,6 +25,7 @@ class FotoPessoaRequest extends FormRequest
     public function messages()
     {
         return [
+            'fotos.required' => 'O campo :attribute é obrigatório.',
             'pes_id.required' => 'O campo :attribute é obrigatório.',
             'pes_id.exists' => 'O :attribute informado não existe na tabela pessoa.',
             'fp_bucket.string' => 'O campo :attribute deve ser uma string.',

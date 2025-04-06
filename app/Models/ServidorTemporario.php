@@ -19,6 +19,7 @@ class ServidorTemporario extends Model
         'st_data_admissao',
         'st_data_demissao',
     ];
+    protected $hidden = ['updated_at', 'created_at'];
 
     public function pessoa()
     {
