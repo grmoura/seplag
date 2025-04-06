@@ -4,14 +4,21 @@
 Esta é a documentação da API desenvolvida em Laravel, utilizando Nginx, MinIO e PostgreSQL.
 
 ## Dados de Inscrição
-Nome: Gabriel Rodrigues de Moura
-Inscrição: 
-E-mail: grmoura18@hotmail.com
+- Nome: Gabriel Rodrigues de Moura
+- Inscrição: XXX
+- E-mail: grmoura18@hotmail.com
 
 ## Requisitos
 - Docker
 - Docker Compose
 - Postman
+
+## Tecnologias Utilizadas
+- PHP 8+
+- Laravel 12+
+- Docker + Docker Compose
+- PostgreSQL
+- MinIO (para armazenamento de fotos)
 
 ## Instalação e Configuração
 
