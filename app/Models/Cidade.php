@@ -17,6 +17,7 @@ class Cidade extends Model
         'cid_nome',
         'cid_uf',
     ];
+    protected $hidden = ['updated_at', 'created_at'];
 
     public function enderecos()
     {

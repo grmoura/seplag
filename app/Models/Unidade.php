@@ -17,6 +17,7 @@ class Unidade extends Model
         'unid_nome',
         'unid_sigla',
     ];
+    protected $hidden = ['updated_at', 'created_at'];
 
     public function enderecos()
     {

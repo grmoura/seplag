@@ -19,9 +19,10 @@ class FotoPessoa extends Model
         'fp_bucket',
         'fp_hash',
     ];
+    protected $hidden = ['updated_at', 'created_at'];
 
     public function pessoa()
     {
-        return $this->belongsTo(Pessoa::class, 'pes_id');
+        return $this->belongsTo(Pessoa::class, 'pes_id', 'pes_id');
     }
 }

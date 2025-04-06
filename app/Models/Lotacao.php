@@ -20,6 +20,8 @@ class Lotacao extends Model
         'lot_data_remocao',
         'lot_portaria',
     ];
+    
+    protected $hidden = ['updated_at', 'created_at'];
 
     public function pessoa()
     {

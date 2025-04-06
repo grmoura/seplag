@@ -19,6 +19,7 @@ class ServidorEfetivo extends Model
         'pes_id',
         'se_matricula',
     ];
+    protected $hidden = ['updated_at', 'created_at'];
 
     public function pessoa()
     {
