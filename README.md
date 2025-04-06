@@ -3,6 +3,11 @@
 ## Introdução
 Esta é a documentação da API desenvolvida em Laravel, utilizando Nginx, MinIO e PostgreSQL.
 
+## Dados de Inscrição
+Nome: Gabriel Rodrigues de Moura
+Inscrição: 
+E-mail: grmoura18@hotmail.com
+
 ## Requisitos
 - Docker
 - Docker Compose
@@ -11,15 +16,19 @@ Esta é a documentação da API desenvolvida em Laravel, utilizando Nginx, MinIO
 ## Instalação e Configuração
 
 1. Clone o repositório
-2. Suba os containers com o comando:
+    ```sh
+   git clone <URL_DO_REPOSITORIO>
+    cd <NOME_DA_PASTA>
+   ```
+3. Suba os containers com o comando:
    ```sh
    docker-compose up --build
    ```
-3. Execute as migrações do banco de dados:
+4. Execute as migrações do banco de dados:
    ```sh
    docker exec -it app php artisan migrate
    ```
-4. Configure o host no arquivo `hosts` do seu sistema para visualizar corretamente as imagens armazenadas no MinIO.
+5. Configure o host no arquivo `hosts` do seu sistema para visualizar corretamente as imagens armazenadas no MinIO.
    
    - **Windows**:
      1. Abra o Bloco de Notas como Administrador.
