@@ -14,16 +14,13 @@ class ServidorEfetivoRequest extends FormRequest
 
     public function rules(): array
     {
-        $pesId = $this->route('pes_id');
-
-        return [
+        $rules =   [
             'se_matricula' => 'required|string|max:20',
             'pes_nome' => 'required|string|max:200',
             'pes_data_nascimento' => 'required|date',
             'pes_sexo' => 'required|string|max:9',
             'pes_mae' => 'required|string|max:200',
             'pes_pai' => 'required|string|max:200',
-            'fotos' => 'required|array|max:5',
             'end_tipo_logradouro' => 'required|string|max:50',
             'end_logradouro' => 'required|string|max:200',
             'end_numero' => 'required|nullable|integer',
@@ -35,6 +32,11 @@ class ServidorEfetivoRequest extends FormRequest
             'lot_data_remocao' => 'nullable|date|after_or_equal:lot_data_lotacao',
             'lot_portaria' => 'required|string|max:100',
         ];
+
+        if ($this->isMethod('post')) 
+            $rules['fotos'] = ['required', 'array', 'max:5'];
+        
+        return $rules;
     }
 
     public function messages(): array
