@@ -31,11 +31,7 @@ Esta é a documentação da API desenvolvida em Laravel, utilizando Nginx, MinIO
    ```sh
    docker-compose up --build
    ```
-4. Execute as migrações do banco de dados:
-   ```sh
-   docker exec -it app php artisan migrate
-   ```
-5. Configure o host no arquivo `hosts` do seu sistema para visualizar corretamente as imagens armazenadas no MinIO.
+4. Configure o host no arquivo `hosts` do seu sistema para visualizar corretamente as imagens armazenadas no MinIO.
    
    - **Windows**:
      1. Abra o Bloco de Notas como Administrador.
@@ -88,7 +84,7 @@ curl --location --request POST 'http://localhost:8000/api/refresh' \
 ## Documentação Completa
 A documentação completa da API pode ser acessada no link abaixo:
 
-[Documentação Postman](https://documenter.getpostman.com/view/19098399/2sB2cUCP7y)
+[Documentação Postman](https://documenter.getpostman.com/view/19098399/2sB2cUCPGn)
 
 Além disso, a collection do Postman está disponível no repositório com o nome:
 
