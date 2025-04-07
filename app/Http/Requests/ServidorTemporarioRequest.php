@@ -13,13 +13,12 @@ class ServidorTemporarioRequest extends FormRequest
 
     public function rules(): array
     {
-        return [
+        $rules = [
             'pes_nome' => 'required|string|max:200',
             'pes_data_nascimento' => 'required|date',
             'pes_sexo' => 'required|string|max:9',
             'pes_mae' => 'required|string|max:200',
             'pes_pai' => 'required|string|max:200',
-            'fotos' => 'required|array|max:5',
             'end_tipo_logradouro' => 'required|string|max:50',
             'end_logradouro' => 'required|string|max:200',
             'end_numero' => 'required|nullable|integer',
@@ -33,6 +32,12 @@ class ServidorTemporarioRequest extends FormRequest
             'st_data_admissao' => 'required|date',
             'st_data_demissao' => 'nullable|date'
         ];
+
+        if ($this->isMethod('post'))
+            $rules['fotos'] = ['required', 'array', 'max:5'];
+        
+        return $rules;
+
     }
 
     public function messages(): array
