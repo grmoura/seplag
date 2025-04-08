@@ -11,7 +11,7 @@ class ServidorEfetivo extends Model
     use HasFactory;
 
     protected $table = 'servidor_efetivo';
-    protected $primaryKey = null;
+    protected $primaryKey = 'pes_id';
     public $incrementing = false;
     public $timestamps = true;
 

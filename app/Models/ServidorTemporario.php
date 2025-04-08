@@ -10,7 +10,7 @@ class ServidorTemporario extends Model
     use HasFactory;
 
     protected $table = 'servidor_temporario';
-    protected $primaryKey = null;
+    protected $primaryKey = 'pes_id';
     public $incrementing = false;
     public $timestamps = true;
 
