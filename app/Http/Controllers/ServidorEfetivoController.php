@@ -14,6 +14,7 @@ use App\Models\PessoaEndereco;
 use App\Models\ServidorEfetivo;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ServidorEfetivoController extends Controller
 {
@@ -241,11 +242,43 @@ class ServidorEfetivoController extends Controller
 
     public function destroy($pes_id)
     {
-        $deleted = ServidorEfetivo::where('pes_id', $pes_id)->delete();
+        $servidorEfetivoExiste = ServidorEfetivo::where('pes_id', $pes_id)->first();
 
-        if ($deleted === 0)
-            return response()->json(['message' => 'Servidor Efetivo não encontrado.'], Response::HTTP_NOT_FOUND);
+        if (!$servidorEfetivoExiste)
+            return response()->json(['message' => 'Servidor Efetivo não encontrado.'], Response::HTTP_OK);
 
-        return response()->json(['message' => 'Servidor Efetivo deletado com sucesso!'], Response::HTTP_OK);
+        try {
+            DB::beginTransaction();
+
+            ServidorEfetivo::where('pes_id', $pes_id)->delete();
+            Lotacao::where('pes_id', $pes_id)->delete();
+
+            $fotos = FotoPessoa::where('pes_id', $pes_id)->get();
+
+            foreach ($fotos as $foto) {
+                if ($foto->fp_caminho && Storage::exists($foto->fp_caminho))
+                    Storage::delete($foto->fp_caminho);
+                $foto->delete();
+            }
+
+            $pessoaEndereco = PessoaEndereco::where('pes_id', $pes_id)->first();
+            if ($pessoaEndereco) {
+                PessoaEndereco::where('pes_id', $pes_id)->delete();
+                Endereco::where('end_id', $pessoaEndereco->end_id)->delete();
+            }
+
+            Pessoa::where('pes_id', $pes_id)->delete();
+
+            DB::commit();
+
+            return response()->json(['message' => 'Servidor Efetivo deletado com sucesso!'], Response::HTTP_OK);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json([
+                'message' => 'Erro ao deletar Servidor Efetivo.',
+                'error' => $e->getMessage(),
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 }
