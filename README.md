@@ -5,7 +5,7 @@ Esta é a documentação da API desenvolvida em Laravel, utilizando Nginx, MinIO
 
 ## Dados de Inscrição
 - Nome: Gabriel Rodrigues de Moura
-- Inscrições: 9306 ( Full Stack Pleno) ,
+- Inscrições: 10145 ( Full Stack Pleno) ,
               9613 ( Desenvolvedor PHP Pleno ),
               9937 ( Desenvolvedor PHP Junior )
 - E-mail: grmoura18@hotmail.com
